@@ -1,0 +1,6 @@
+{
+  "appId": "software.lonewolf.purpose",
+  "appName": "Purpose",
+  "webDir": "dist",
+  "bundledWebRuntime": true
+}

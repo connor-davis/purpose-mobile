@@ -9,7 +9,6 @@ import {
   FormLabel,
   Input,
   VStack,
-  notificationService
 } from '@hope-ui/solid';
 
 import PurposeLogo from '../../components/PurposeLogo';
@@ -45,58 +44,45 @@ let LoginPage = ({ toggleLogin = () => {} }) => {
         }
       )
       .then((response) => {
-        if (response.data.error)
-          return notificationService.show({
-            status: 'danger',
-            title: 'Purpose',
-            description: 'Unable to log in - ' + response.data.message,
-          });
-        else {
-          updateUser({
-            ...response.data.data,
-            authenticationToken: undefined,
-          });
-          updateAuthenticationGuard({
-            authenticationToken: response.data.data.authenticationToken,
-          });
-
-          notificationService.show({
-            status: 'success',
-            title: 'Purpose',
-            description: response.data.message,
-          });
-        }
+        updateUser({
+          ...response.data.data,
+          authenticationToken: undefined,
+        });
+        updateAuthenticationGuard({
+          authenticationToken: response.data.data.authenticationToken,
+        });
+      })
+      .catch(() => {
+        setMessage({ type: 'danger', value: 'Authentication error.' });
       });
   };
 
   return (
     <Box class="relative w-full h-full">
-      <Box position="absolute" top="$5" right="$5">
+      <div class="absolute top-5 right-5 bg-blue-100">
         {message.type && (
           <Alert status={message.type} variant="left-accent">
             <AlertIcon />
             {message.value}
           </Alert>
         )}
-      </Box>
+      </div>
 
       <Center bg="white" class="w-full h-full">
         <VStack spacing="$10">
           <VStack spacing="$5">
-            <Box w="100%" h="auto" p="$10">
+            <Box class="flex justify-center items-center w-full h-full">
               <PurposeLogo />
             </Box>
 
             <Box color="#a3a3a3">
               Do not have an account yet?{' '}
-              <Box
-                as="span"
-                color="$lime400"
-                cursor="pointer"
+              <span
+                class="text-lime-400 cursor-pointer"
                 onClick={() => toggleLogin()}
               >
                 Create account
-              </Box>
+              </span>
             </Box>
           </VStack>
 
@@ -142,7 +128,7 @@ let LoginPage = ({ toggleLogin = () => {} }) => {
                       variant="unstyled"
                       bg="#e5e5e5"
                       p="$3"
-                      placeholder="Your email"
+                      placeholder="Your password"
                       size="md"
                       color="black"
                       id="password"
@@ -160,11 +146,10 @@ let LoginPage = ({ toggleLogin = () => {} }) => {
                 <Button
                   color="black"
                   rounded="$md"
-                  bg="$lime400"
+                  class="bg-lime-400 shadow-lg shadow-lime-200 select-none outline-none"
                   w="100%"
                   variant="solid"
-                  shadow="$2xl"
-                  colorScheme="$lime400"
+                  colorScheme="$lime4"
                   onClick={() => authenticate()}
                 >
                   Login

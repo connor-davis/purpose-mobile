@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../purpose-api/.idea/purpose-api.iml" filepath="$PROJECT_DIR$/../purpose-api/.idea/purpose-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../purpose-app/.idea/purpose-app.iml" filepath="$PROJECT_DIR$/../purpose-app/.idea/purpose-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/purpose-mobile.iml" filepath="$PROJECT_DIR$/.idea/purpose-mobile.iml" />
+    </modules>
+  </component>
+</project>

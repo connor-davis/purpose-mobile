@@ -1,13 +1,14 @@
 import {
+  Alert,
+  AlertIcon,
   Box,
   Button,
   Center,
   FormControl,
   FormHelperText,
   FormLabel,
-  HStack,
   Input,
-  VStack
+  VStack,
 } from '@hope-ui/solid';
 
 import PurposeLogo from '../../components/PurposeLogo';
@@ -79,14 +80,14 @@ let RegisterPage = ({ toggleLogin = () => {} }) => {
 
   return (
     <Box class="relative w-full h-full">
-      <Box position="absolute" top="$5" right="$5">
+      <div class="absolute top-5 right-5 bg-blue-100">
         {message.type && (
           <Alert status={message.type} variant="left-accent">
             <AlertIcon />
             {message.value}
           </Alert>
         )}
-      </Box>
+      </div>
 
       {showTermsAndConditionsModal() && (
         <TermsAndConditionsModal
@@ -107,20 +108,18 @@ let RegisterPage = ({ toggleLogin = () => {} }) => {
       <Center bg="white" class="w-full h-full">
         <VStack spacing="$10">
           <VStack spacing="$5">
-            <Box w="100%" h="auto" p="$10">
+            <Box class="flex justify-center items-center w-full h-full">
               <PurposeLogo />
             </Box>
 
             <Box color="#a3a3a3">
               Already have an account?{' '}
-              <Box
-                as="span"
-                cursor="pointer"
-                color="$lime400"
+              <span
+                class="text-lime-400 cursor-pointer"
                 onClick={() => toggleLogin()}
               >
                 Authenticate
-              </Box>
+              </span>
             </Box>
           </VStack>
 
@@ -202,13 +201,12 @@ let RegisterPage = ({ toggleLogin = () => {} }) => {
               </VStack>
 
               <VStack w="100%" spacing="$2">
-                <HStack w="100%" justifyContent="center" spacing="$2">
+                <Center w="100%" class="space-x-2">
                   <Box
-                    w="$5"
-                    h="$5"
-                    rounded="$full"
-                    bg={`${
-                      agreedToTermsAndConditions() ? '$lime400' : '$bg400'
+                    class={`flex flex-col justify-center items-center w-5 h-5 rounded-full cursor-pointer ${
+                      agreedToTermsAndConditions()
+                        ? 'bg-lime-400'
+                        : 'bg-gray-400'
                     }`}
                     onClick={() =>
                       setAgreedToTermsAndConditions(
@@ -217,20 +215,18 @@ let RegisterPage = ({ toggleLogin = () => {} }) => {
                     }
                   ></Box>
                   <Box
-                    cursor="pointer"
-                    color="$bg400"
-                    _hover={{ color: '$lime400' }}
+                    class="text-sm cursor-pointer text-gray-400 hover:text-lime-400"
                     onClick={() => setShowTermsAndConditionsModal(true)}
                   >
                     Terms and Conditions
                   </Box>
-                </HStack>
+                </Center>
 
                 <Box w="100%">
                   <Button
                     color="black"
                     rounded="$md"
-                    bg="$lime400"
+                    class="bg-lime-400 shadow-lg shadow-lime-200 select-none outline-none"
                     w="100%"
                     variant="solid"
                     colorScheme="$lime4"

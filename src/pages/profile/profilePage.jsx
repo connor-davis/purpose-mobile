@@ -1,3 +1,4 @@
+import useState from '../../hooks/state';
 import {
   Accordion,
   AccordionButton,
@@ -10,18 +11,16 @@ import {
   HStack,
   Skeleton,
   Text,
-  VStack
+  VStack,
 } from '@hope-ui/solid';
-
-import EditBankDetails from './editBankDetails';
-import EditBusinessDetails from './editBusinessDetails';
-import EditLocationDetails from './editLocationDetails';
-import EditPersonalDetails from './editPersonalDetails';
-import apiUrl from '../../apiUrl';
-import axios from 'axios';
-import { createSignal } from 'solid-js';
+import { createSignal, onMount } from 'solid-js';
 import { createStore } from 'solid-js/store';
-import useState from '../../hooks/state';
+import EditPersonalDetails from './editPersonalDetails';
+import axios from 'axios';
+import apiUrl from '../../apiUrl';
+import EditBusinessDetails from './editBusinessDetails';
+import EditBankDetails from './editBankDetails';
+import EditLocationDetails from './editLocationDetails';
 
 let ProfilePage = () => {
   let [userState, updateUserState] = useState('userState');
@@ -82,27 +81,25 @@ let ProfilePage = () => {
     { name: 'location-details' }
   );
 
+  onMount(() => {});
+
   setTimeout(() => {
-    if (authState.authenticationToken) {
-      axios
-        .get(apiUrl + '/users', {
-          headers: {
-            Authorization: `Bearer ${authState.authenticationToken}`,
-          },
-        })
-        .then((response) => {
-          if (response.data.error) return console.log(response.data);
-          else {
-            console.log(response.data.data);
+    axios
+      .get(apiUrl + '/users', {
+        headers: {
+          Authorization: `Bearer ${authState.authenticationToken}`,
+        },
+      })
+      .then((response) => {
+        if (response.data.error) return console.log(response.data);
+        else {
+          updateUserState(response.data.data);
 
-            updateUserState(response.data.data);
+          setPageSettings('loadingDetails', false);
 
-            setPageSettings('loadingDetails', false);
-
-            loadDetails();
-          }
-        });
-    }
+          loadDetails();
+        }
+      });
   }, 300);
 
   let loadDetails = () => {
@@ -176,11 +173,11 @@ let ProfilePage = () => {
   };
 
   return (
-    <VStack w="100%" h="100%" color="black">
-      <Box w="100%" mb="$5">
-        Your Profile
-      </Box>
-      <Box w="100%" h="100%" pb="$20">
+    <VStack w="100%" h="100%" color="black" roundedTop={'$2xl'}>
+      <HStack w="100%" p="$5" class="justify-between">
+        <Box>Your Profile</Box>
+      </HStack>
+      <Box w="100%" h="100%" overflowY="auto" px="$5" pb="$16">
         <Accordion
           index={pageIndex()}
           onChange={(value) => {
@@ -198,9 +195,8 @@ let ProfilePage = () => {
             borderColor="#e5e5e5"
             rounded={'$lg'}
             w={'100%'}
-            h={`${pageIndex() === 0 ? '100%' : '$10'}`}
-            overflowY={`${pageIndex() === 0 ? 'auto' : 'hidden'}`}
-            bg={'green'}
+            class={`${pageIndex() === 0 ? 'h-full overflow-y-auto' : ''}`}
+            bg={'white'}
           >
             <AccordionButton _hover={{ bg: 'white', color: 'black' }}>
               <Text flex={1} fontWeight="$medium" textAlign="start">
@@ -335,8 +331,7 @@ let ProfilePage = () => {
             borderColor="#e5e5e5"
             rounded={'$lg'}
             w={'100%'}
-            h={`${pageIndex() === 1 ? '100%' : '$10'}`}
-            overflowY={`${pageIndex() === 1 ? 'auto' : 'hidden'}`}
+            class={`${pageIndex() === 1 ? 'h-full overflow-y-auto' : ''}`}
             bg={'white'}
           >
             <AccordionButton _hover={{ bg: 'white', color: 'black' }}>
@@ -446,8 +441,7 @@ let ProfilePage = () => {
             borderColor="#e5e5e5"
             rounded={'$lg'}
             w={'100%'}
-            h={`${pageIndex() === 2 ? '100%' : '$10'}`}
-            overflowY={`${pageIndex() === 2 ? 'auto' : 'hidden'}`}
+            class={`${pageIndex() === 2 ? 'h-full overflow-y-auto' : ''}`}
             bg={'white'}
           >
             <AccordionButton _hover={{ bg: 'white', color: 'black' }}>
@@ -535,8 +529,7 @@ let ProfilePage = () => {
             borderColor="#e5e5e5"
             rounded={'$lg'}
             w={'100%'}
-            h={`${pageIndex() === 3 ? '100%' : '$10'}`}
-            overflowY={`${pageIndex() === 3 ? 'auto' : 'hidden'}`}
+            class={`${pageIndex() === 3 ? 'h-full overflow-y-auto' : ''}`}
             bg={'white'}
           >
             <AccordionButton _hover={{ bg: 'white', color: 'black' }}>

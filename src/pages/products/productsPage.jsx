@@ -5,6 +5,7 @@ import {
   MenuContent,
   MenuItem,
   MenuTrigger,
+  notificationService,
   Skeleton,
   Table,
   Tbody,
@@ -13,16 +14,14 @@ import {
   Thead,
   Tr,
   VStack,
-  notificationService
 } from '@hope-ui/solid';
-import { createSignal, onMount } from 'solid-js';
-
 import AddProductModal from '../../components/modals/addProductModal';
 import EditProductModal from '../../components/modals/editProductModal';
-import apiUrl from '../../apiUrl';
-import axios from 'axios';
-import { createStore } from 'solid-js/store';
 import useState from '../../hooks/state';
+import { createSignal, onMount } from 'solid-js';
+import axios from 'axios';
+import apiUrl from '../../apiUrl';
+import { createStore } from 'solid-js/store';
 
 let ProductsPage = () => {
   let [authState, updateAuthState] = useState('authenticationGuard');
@@ -103,8 +102,8 @@ let ProductsPage = () => {
   };
 
   return (
-    <VStack w="$full" h="$full" color="black" bg="white">
-      <HStack w="$full" justifyContent="space-between">
+    <VStack w="100%" h="100%" color="black">
+      <HStack w="100%" p="$5" class="justify-between">
         <Box>Your Products</Box>
         <AddProductModal
           onAdd={(data) =>
@@ -119,7 +118,7 @@ let ProductsPage = () => {
         />
       </HStack>
 
-      <Box w="100%" h="100%" py="$5" overflowY={'auto'}>
+      <Box w={'100%'} h={'100%'} p={'$5'} overflowY={'auto'}>
         <Box borderRadius={'$2xl'} borderWidth={'1px'} borderColor={'#e5e5e5'}>
           <Table>
             <Thead>

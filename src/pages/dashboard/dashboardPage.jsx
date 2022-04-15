@@ -1,65 +1,15 @@
-import { Box, HStack, VStack } from '@hope-ui/solid';
-
 import useState from '../../hooks/state';
+import { Box, HStack, VStack } from '@hope-ui/solid';
 
 let DashboardPage = () => {
   let [userState, updateUserState] = useState('userState');
 
   return (
-    <VStack w="$full" h="$full" color="black" bg="white">
-      <HStack w="$full" class="justify-between">
+    <VStack w="100%" h="100%" color="black">
+      <HStack w="100%" p="$5" class="justify-between">
         <Box>Your Dashboard</Box>
       </HStack>
-      <Box w="$full" h="$full" pb="$20" overflowY="auto">
-        <Box w="$full" p="$10" mb="$5" bg="$lime400">
-          Hello
-        </Box>
-        <Box w="$full" p="$10" mb="$5" bg="$lime400">
-          Hello
-        </Box>
-        <Box w="$full" p="$10" mb="$5" bg="$lime400">
-          Hello
-        </Box>
-        <Box w="$full" p="$10" mb="$5" bg="$lime400">
-          Hello
-        </Box>
-        <Box w="$full" p="$10" mb="$5" bg="$lime400">
-          Hello
-        </Box>
-        <Box w="$full" p="$10" mb="$5" bg="$lime400">
-          Hello
-        </Box>
-        <Box w="$full" p="$10" mb="$5" bg="$lime400">
-          Hello
-        </Box>
-        <Box w="$full" p="$10" mb="$5" bg="$lime400">
-          Hello
-        </Box>
-        <Box w="$full" p="$10" mb="$5" bg="$lime400">
-          Hello
-        </Box>
-        <Box w="$full" p="$10" mb="$5" bg="$lime400">
-          Hello
-        </Box>
-        <Box w="$full" p="$10" mb="$5" bg="$lime400">
-          Hello
-        </Box>
-        <Box w="$full" p="$10" mb="$5" bg="$lime400">
-          Hello
-        </Box>
-        <Box w="$full" p="$10" mb="$5" bg="$lime400">
-          Hello
-        </Box>
-        <Box w="$full" p="$10" mb="$5" bg="$lime400">
-          Hello
-        </Box>
-        <Box w="$full" p="$10" mb="$5" bg="$lime400">
-          Hello
-        </Box>
-        <Box w="$full" p="$10" mb="$5" bg="$lime400">
-          Hello
-        </Box>
-      </Box>
+      <Box w="100%" h="100%" overflowY="auto" px="$5" pb="$16"></Box>
     </VStack>
   );
 };

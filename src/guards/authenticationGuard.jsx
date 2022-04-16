@@ -3,8 +3,9 @@ import apiUrl from '../apiUrl';
 import axios from 'axios';
 import { onMount } from 'solid-js';
 import useState from '../hooks/state';
+import { Box } from '@hope-ui/solid';
 
-let AuthenticationGuard = ({ children }) => {
+let AuthenticationGuard = ({ children, onAuthenticated = () => {} }) => {
   let [state, update] = useState('authenticationGuard');
 
   onMount(() => {
@@ -15,6 +16,9 @@ let AuthenticationGuard = ({ children }) => {
             authorization: 'Bearer ' + state.authenticationToken,
           },
         })
+        .then((response) => {
+          if (response.data === 'Authorized') return onAuthenticated();
+        })
         .catch((error) => {
           console.log(error);
           update({ authenticationToken: undefined });
@@ -23,9 +27,9 @@ let AuthenticationGuard = ({ children }) => {
   });
 
   return (
-    <div class="w-screen h-screen outline-none select-none">
+    <Box w="$screenW" h="$screenH">
       {state.authenticationToken ? children : <AuthenticationPage />}
-    </div>
+    </Box>
   );
 };
 

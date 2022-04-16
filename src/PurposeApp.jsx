@@ -8,26 +8,68 @@ import SetupProfilePage from './pages/setup/setupProfilePage';
 import useState from './hooks/state';
 import ProductsPage from './pages/products/productsPage';
 import ProfilePage from './pages/profile/profilePage';
+import axios from 'axios';
+import apiUrl from './apiUrl';
+import { notificationService } from '@hope-ui/solid';
 
 let PurposeApp = () => {
-  let [userState, updateUserState] = useState('userState');
+  let [userState, setUserState] = useState('userState');
+  let [authState, setAuthState] = useState('authenticationGuard');
 
-  setTimeout(() => {
-    switch (userState.type) {
-      case 'admin':
-        document.title = document.title + ' | Admin';
-        break;
+  let loadProfile = () => {
+    setTimeout(() => {
+      document.title = document.title + ' | Loading Profile';
 
-      default:
-        if (userState.displayName) {
-          document.title = `Purpose | ${userState.displayName}`;
-          break;
-        }
+      notificationService.show({
+        id: 'loading-user-profile',
+        persistent: true,
+        closable: false,
+        loading: true,
+        title: 'Purpose',
+        description: 'Loading your profile.',
+      });
 
-        document.title = 'Purpose | Welcome';
-        break;
-    }
-  }, 100);
+      setTimeout(() => {
+        axios
+          .get(apiUrl + '/users', {
+            headers: {
+              Authorization: 'Bearer ' + authState.authenticationToken,
+            },
+          })
+          .then((response) => {
+            if (response.data.error)
+              return notificationService.hide('loading-user-profile');
+            else {
+              let data = response.data.data;
+
+              notificationService.update({
+                id: 'loading-user-profile',
+                status: 'success',
+                title: 'Purpose',
+                description: 'Your profile has been loaded.',
+                duration: 2000,
+                closable: true,
+              });
+
+              switch (data.type) {
+                case 'admin':
+                  document.title = document.title + ' | Admin';
+                  break;
+
+                default:
+                  if (data.displayName) {
+                    document.title = `Purpose | ${data.displayName}`;
+                    break;
+                  }
+
+                  document.title = 'Purpose | Welcome';
+                  break;
+              }
+            }
+          });
+      }, 3000);
+    }, 100);
+  };
 
   let showSetupProfileRequest = () => {
     let requiredFields = [
@@ -62,7 +104,7 @@ let PurposeApp = () => {
   };
 
   return (
-    <AuthenticationGuard>
+    <AuthenticationGuard onAuthenticated={() => loadProfile()}>
       {showSetupProfileRequest() && (
         <Routes>
           <Route path="/" exact element={<NoType />} />
